@@ -1,0 +1,59 @@
+{% extends 'mmorpgapp/../base.html' %}
+
+{% block title %}
+Adverts
+{% endblock title %}
+
+{% block content %}
+<table>
+    <thead>
+        <th>
+            Автор
+        </th>
+        <th>
+            Категория
+        </th>
+        <th>
+            Заголовок
+        </th>
+        <th>
+            Сообщение
+        </th>
+        <th>
+            Фото
+        </th>
+        <th>
+            Фаил
+        </th>
+        <th>
+            Действуй
+        </th>
+
+
+
+    </thead>
+    <tr>
+        <td>
+            {{ advert.userWho}}
+        </td>
+        <td>
+            {{ advert.postType}}
+        </td>
+        <td>
+            {{ advert.header}}
+        </td>
+        <td>
+            {{ advert.text}}
+        </td>
+        <td>
+            {{ advert.image}}
+        </td>
+        <td>
+            {{ advert.file}}
+        </td>
+        <td>
+            <a href="{% url 'advert_update' pk=advert.pk %}"><u>Редактировать</u></a>
+        </td>
+    </tr>
+</table>
+{% endblock content %}

@@ -1,0 +1,80 @@
+{% extends 'mmorpgapp/../base.html' %}
+
+{% block title %}
+Adverts
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все обьявления-->
+{% block content %}
+    <h1>Обьявления</h1>
+    <h3>{{ time_now }}</h3>
+    <h3> {{ value1|default_if_none:"ничего" }} </h3> <!-- Здесь, если в переменной value1 будет записано None, то выведется текст НИЧЕГО -->
+     <aside class="actions">
+            {% if user.is_authenticated %}
+                <a href="{% url 'response_list'%}">Смотреть отклики на мои обьявления</a>
+            {% endif %}
+     </aside>
+
+
+    <hr>
+    {% if adverts %} <!-- Если есть товары, то выводим таблицу с ними -->
+        <table>
+            <tr>
+                <td>
+                    Автор
+                </td>
+                <td>
+                    Категория
+                </td>
+
+                <td>
+                    Заголовок
+                </td>
+                <td>
+                    Сообщение
+                </td>
+                 <td>
+                    Фото
+                </td>
+                <td>
+                    Фаил
+                </td>
+
+            </tr>
+        {% for advert in adverts %}
+            <tr>
+                <td>
+                    {{ advert.userWho}}
+                </td>
+                <td>
+                    {{ advert.postType}}
+                </td>
+                <td>
+                    {{ advert.header}}
+                </td>
+                <td>
+                    <a href="{% url 'advert_detail' pk=advert.pk %}">{{ advert.text|truncatewords:20}}</a>
+                </td>
+                <td>
+                    {{ advert.image}}
+                </td>
+                <td>
+                    {{ advert.file}}
+                </td>
+
+
+
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <h2>Сообщений нет!</h2>
+    {% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+    <input type="submit" value="Добавить обьявление">
+</form>
+
+{% endblock content %}

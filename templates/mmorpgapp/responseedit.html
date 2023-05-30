@@ -1,0 +1,46 @@
+{% extends 'mmorpgapp/../base.html' %}
+
+{% block title %}
+Responses
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, айди которого было передано в адрес -->
+{% block content %}
+<table>
+    <tr>
+        <td>
+            Обьявление
+        </td>
+        <td>
+            Автор
+        </td>
+        <td>
+            Текст
+        </td>
+        <td>
+            Подтвердить отклик
+        </td>
+        <td>
+            Удалить отклик
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            {{ response.advertResponse}} <!-- дописываем специальный фильтр, чтобы ограничить количество символов до 20. Все остальные символы превратятся в многоточие. -->
+        </td>
+        <td>
+            {{ response.userTo }}
+        </td>
+        <td>
+            {{ response.text}}
+        </td>
+        <td>
+            картинка
+        </td>
+        <td>
+            <a href="{% url 'response_delete' pk=response.pk %}"><u>Удалить</u></a>
+        </td>
+    </tr>
+</table>
+{% endblock content %}

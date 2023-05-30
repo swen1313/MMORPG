@@ -1,0 +1,54 @@
+{% extends 'mmorpgapp/../base.html' %}
+
+{% block title %}
+Responses
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все обьявления-->
+{% block content %}
+    <h1>Все отклики</h1>
+    <h3>{{ time_now }}</h3>
+    <form method="GET">
+    {{ filter.form }} <!-- Форму от фильтров за нас сделает Django. А вот кнопку, увы, придётся делать самому -->
+    <input type="submit" value="Найти">
+    </form>
+    <hr>
+    {% if responses %} <!-- Если есть товары, то выводим таблицу с ними -->
+        <table>
+            <tr>
+                <td>
+                    Обьявление
+                </td>
+                <td>
+                    Автор
+                </td>
+                <td>
+                    Текст
+                </td>
+            </tr>
+        {% for response in filter.qs %}
+
+            <tr>
+                <td>
+                    {{ response.advertResponse|truncatechars:20 }} <!-- дописываем специальный фильтр, чтобы ограничить количество символов до 20. Все остальные символы превратятся в многоточие. -->
+                </td>
+                <td>
+                    {{ response.userTo }}
+                </td>
+                <td>
+                    <a href="{% url 'response_detail' pk=response.pk %}">{{ response.text|truncatewords:1}}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <h2>Откликов нет!</h2>
+    {% endif %}
+
+    <form method="POST">
+    {% csrf_token %}
+    {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+    <input type="submit" value="Добавить отклик">
+</form>
+
+{% endblock content %}

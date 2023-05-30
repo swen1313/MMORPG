@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}  list {% endblock title %}
+
+{% block content %}
+<h2>Вы действительно хотите удалить данный отклик?</h2>
+<table>
+    <tr>
+        <td>
+            Обьявление
+        </td>
+        <td>
+            Автор
+        </td>
+        <td>
+            Текст
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            {{ response.advertResponse}} <!-- дописываем специальный фильтр, чтобы ограничить количество символов до 20. Все остальные символы превратятся в многоточие. -->
+        </td>
+        <td>
+            {{ response.userTo }}
+        </td>
+        <td>
+            {{ response.text}}
+        </td>
+    </tr>
+</table>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить"></form>
+{% endblock content %}
